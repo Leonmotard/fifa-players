@@ -4,6 +4,7 @@ const cors = require("cors");
 const db = require("./models")
 const Role = db.role;
 const app = express();
+const { errorHandler } = require('./middleware/errorMiddleware');
 
 var corsOptions = {
   origin: "http://localhost:8081"
@@ -21,6 +22,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/players', require('./routes/players'));
 app.use('/auth', require('./routes/auth'));
 
+//Error handler
+app.use(errorHandler);
+
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to fifa players application." });
@@ -30,7 +34,7 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, async () => {
   //initiate database
-  await db.sequelize.sync({ alter : true }).then(()=>{
+  await db.sequelize.sync().then(()=>{
     //initial();
   });
   console.log(`Server is running on port ${PORT}.`);

@@ -4,9 +4,9 @@ const db = require("../config/dbConfig");
     const Player = db.define("player", {
         id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
             autoIncrement: true,
             primaryKey: true,
+            allowNull: false,
             field: "player_id"
         },
         longName: {

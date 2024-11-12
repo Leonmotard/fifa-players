@@ -1,14 +1,15 @@
 const controller = require('../controllers/playerController');
+const authJwt = require('../providers/jwtTokenVerifier');
 const router = require('express').Router();
 
 // CRUD Routes /users
-router.get('/', controller.getPlayers); // /players
+router.get('/', authJwt.verifyToken, controller.getPlayers); // /players
 
-router.get('/:playerId', controller.getPlayer); // /players/:playerId
+router.get('/:playerId', authJwt.verifyToken, controller.getPlayer); // /players/:playerId
 
-router.post('/', controller.createPlayer); // /players
+router.post('/', authJwt.verifyToken, controller.createPlayer); // /players
 
-router.put('/:playerId', controller.updatePlayer); // /players/:playerId
+router.put('/:playerId', authJwt.verifyToken, controller.updatePlayer); // /players/:playerId
 
 router.delete('/:playerId', controller.deletePlayer); // /players/:playerId
 

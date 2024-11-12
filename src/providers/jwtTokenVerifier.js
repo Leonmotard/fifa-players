@@ -5,7 +5,7 @@ const Role = db.role;
 const User = db.user;
 
 verifyToken = (req, res, next) => {
-    let token = req.headers['x-access-token'];
+    const token = req.header('Authorization');
   
     if (!token){
         return res.status(403).send({ 
@@ -13,7 +13,7 @@ verifyToken = (req, res, next) => {
         });
     }
 
-    jwt.verify(token, config.secret, (err, decoded) => {
+    jwt.verify(token.split(' ')[1], config.secret, (err, decoded) => {
         if (err){
             return res.status(500).send({ 
                     auth: false, 
